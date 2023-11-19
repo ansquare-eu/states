@@ -21,7 +21,7 @@
 		"entrypoints": {
 			"init": "eu.ansquare.states.States",
 			"client_init": "eu.ansquare.states.client.StatesClient",
-			"cardinal-components-chunk": "eu.ansquare.states.cca.StatesEntityComponents",
+			"cardinal-components-entity": "eu.ansquare.states.cca.StatesEntityComponents",
 			"cardinal-components-chunk": "eu.ansquare.states.cca.StatesChunkComponents"
 		},
 		"depends": [
