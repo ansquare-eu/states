@@ -40,7 +40,8 @@
 		]
 	},
 	"cardinal-components": [
-		"states:claimedchunk"
+		"states:claimedchunk",
+		"states:citizen"
 	],
 	"mixin": "states.mixins.json"
 }

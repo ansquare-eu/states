@@ -4,15 +4,16 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtIntArray;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class StateBlockEntity extends BlockEntity {
-	public List<ChunkPos> list;
+	public Set<ChunkPos> list = new HashSet<>();
+	public UUID uuid = UUID.randomUUID();
 	public StateBlockEntity(BlockPos pos, BlockState state) {
 		super(StatesBlocks.STATE_BLOCK_ENTITY, pos, state);
 	}
@@ -27,15 +28,22 @@ public class StateBlockEntity extends BlockEntity {
 		});
 		nbt.putIntArray("xs", xs);
 		nbt.putIntArray("zs", zs);
+		nbt.putUuid("stateid", uuid);
 		super.writeNbt(nbt);
 	}
 	public void readNbt(NbtCompound nbt) {
 		super.readNbt(nbt);
-		list = new ArrayList<>();
 		int[] xs = nbt.getIntArray("xs");
 		int[] zs = nbt.getIntArray("zs");
+		uuid = nbt.getUuid("stateid");
 		for (int i = 0; i < xs.length; i++){
 			list.add(new ChunkPos(xs[i], zs[i]));
+		}
+	}
+	public void addFromNbtList(NbtList nbtlist){
+		for (int i = 0; i < nbtlist.size(); i++) {
+			int[] array = nbtlist.getIntArray(i);
+			list.add(new ChunkPos(array[0], array[1]));
 		}
 	}
 }

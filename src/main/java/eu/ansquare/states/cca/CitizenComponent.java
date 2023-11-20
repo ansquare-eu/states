@@ -2,20 +2,23 @@ package eu.ansquare.states.cca;
 
 import dev.onyxstudios.cca.api.v3.component.Component;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtHelper;
+import net.minecraft.nbt.NbtList;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class CitizenComponent implements Component {
-	public List<Integer> allow;
+	public Set<UUID> allow = new HashSet<>();
 	@Override
 	public void readFromNbt(NbtCompound tag) {
-		allow = Arrays.stream(tag.getIntArray("allow")).boxed().toList();
+		tag.getList("allow", 11).forEach(nbtElement -> allow.add(NbtHelper.toUuid(nbtElement)));
 	}
 
 	@Override
 	public void writeToNbt(NbtCompound tag) {
-		tag.putIntArray("allow", allow);
+		NbtList list = new NbtList();
+		allow.forEach(uuid -> list.add(NbtHelper.fromUuid(uuid)));
+		tag.put("allow", list);
 	}
 }

@@ -50,15 +50,26 @@ dependencies {
 	*/
 	modImplementation libs.quilt.loader
 	// Replace modImplementation with modApi if you expose components in your own API
-	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}"
-	// Includes Cardinal Components API as a Jar-in-Jar dependency (optional but recommended)
-	include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}"
-	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
-	// Includes Cardinal Components API as a Jar-in-Jar dependency (optional but recommended)
-	include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}"
-	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-chunk:${project.cca_version}"
-	// Includes Cardinal Components API as a Jar-in-Jar dependency (optional but recommended)
-	include "dev.onyxstudios.cardinal-components-api:cardinal-components-chunk:${project.cca_version}"
+	modApi include ("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}" ){
+		exclude group: 'net.fabricmc', module: 'fabric-loader'
+		exclude group: 'net.fabricmc.fabric-api', module: 'fabric-api-base'
+		exclude group: 'net.fabricmc.fabric-api', module: 'fabric-lifecycle-events-v1'
+		exclude group: 'net.fabricmc.fabric-api', module: 'fabric-networking-api-v1'
+
+	}
+	modApi include ("dev.onyxstudios.cardinal-components-api:cardinal-components-chunk:${project.cca_version}" ){
+		exclude group: 'net.fabricmc', module: 'fabric-loader'
+		exclude group: 'net.fabricmc.fabric-api', module: 'fabric-api-base'
+		exclude group: 'net.fabricmc.fabric-api', module: 'fabric-lifecycle-events-v1'
+		exclude group: 'net.fabricmc.fabric-api', module: 'fabric-networking-api-v1'
+
+	}
+	modApi include ("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}" ){
+		exclude group: 'net.fabricmc', module: 'fabric-loader'
+		exclude group: 'net.fabricmc.fabric-api', module: 'fabric-api-base'
+		exclude group: 'net.fabricmc.fabric-api', module: 'fabric-lifecycle-events-v1'
+		exclude group: 'net.fabricmc.fabric-api', module: 'fabric-networking-api-v1'
+	}
 
 	// QSL is not a complete API; You will need Quilted Fabric API to fill in the gaps.
 	// Quilted Fabric API will automatically pull in the correct QSL version.

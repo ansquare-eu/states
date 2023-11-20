@@ -1,6 +1,7 @@
 package eu.ansquare.states;
 
 import eu.ansquare.states.block.StatesBlocks;
+import eu.ansquare.states.item.StatesItems;
 import net.minecraft.item.ItemStack;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
@@ -18,6 +19,6 @@ public class States implements ModInitializer {
 	public void onInitialize(ModContainer mod) {
 		LOGGER.info("Hello Quilt world from {}!", mod.metadata().name());
 		StatesBlocks.init();
-
+		StatesItems.init();
 	}
 }

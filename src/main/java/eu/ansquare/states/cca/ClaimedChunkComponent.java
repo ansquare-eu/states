@@ -9,15 +9,15 @@ public class ClaimedChunkComponent implements Component {
 	public int stateId;
 	@Override
 	public void readFromNbt(NbtCompound tag) {
-		ownerBlock = new BlockPos(tag.getInt("x"), tag.getInt("y"), tag.getInt("z"));
-		stateId = tag.getInt("id");
+		//ownerBlock = new BlockPos(tag.getInt("x"), tag.getInt("y"), tag.getInt("z"));
+		//stateId = tag.getInt("id");
 	}
 
 	@Override
 	public void writeToNbt(NbtCompound tag) {
-		tag.putInt("x", ownerBlock.getX());
-		tag.putInt("y", ownerBlock.getY());
-		tag.putInt("z", ownerBlock.getZ());
-		tag.putInt("id", stateId);
+		//tag.putInt("x", ownerBlock.getX());
+		//tag.putInt("y", ownerBlock.getY());
+		//tag.putInt("z", ownerBlock.getZ());
+		//tag.putInt("id", stateId);
 	}
 }
