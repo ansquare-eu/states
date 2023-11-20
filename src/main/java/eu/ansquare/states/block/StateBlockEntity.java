@@ -1,5 +1,7 @@
 package eu.ansquare.states.block;
 
+import eu.ansquare.states.States;
+import eu.ansquare.states.cca.StatesChunkComponents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -43,7 +45,17 @@ public class StateBlockEntity extends BlockEntity {
 	public void addFromNbtList(NbtList nbtlist){
 		for (int i = 0; i < nbtlist.size(); i++) {
 			int[] array = nbtlist.getIntArray(i);
-			list.add(new ChunkPos(array[0], array[1]));
+			ChunkPos pos = new ChunkPos(array[0], array[1]);
+			StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.maybeGet(world.getChunk(pos.x, pos.z)).ifPresent(claimedChunkComponent -> {
+				if(claimedChunkComponent.claim(this).print(pos).valid){
+					list.add(pos);
+				}
+			});
 		}
+	}
+	public void destroy(){
+		States.LOGGER.info("destroying");
+		list.forEach(chunkPos -> StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.maybeGet(world.getChunk(chunkPos.x, chunkPos.z)).ifPresent(claimedChunkComponent -> claimedChunkComponent.unclaim()));
+		list.clear();
 	}
 }

@@ -13,6 +13,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class StatemakerBlock extends Block implements BlockEntityProvider {
 	public StatemakerBlock(Settings settings) {
@@ -41,6 +43,13 @@ public class StatemakerBlock extends Block implements BlockEntityProvider {
 		}
 
 		return ActionResult.PASS;
+	}
+	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+		super.onBreak(world, pos, state, player);
+		BlockEntity blockEntity1 = world.getBlockEntity(pos);
+		if(blockEntity1 instanceof StateBlockEntity stateBlockEntity){
+			stateBlockEntity.destroy();
+		}
 	}
 
 }
