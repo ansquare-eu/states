@@ -1,19 +1,27 @@
 package eu.ansquare.states.block;
 
+import eu.ansquare.states.StatemakerScreenHandler;
 import eu.ansquare.states.States;
 import eu.ansquare.states.cca.StatesChunkComponents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIntArray;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import org.apache.logging.log4j.core.tools.picocli.CommandLine;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class StateBlockEntity extends BlockEntity {
+public class StateBlockEntity extends BlockEntity implements NamedScreenHandlerFactory {
 	public Set<ChunkPos> list = new HashSet<>();
 	public UUID uuid = UUID.randomUUID();
 	public StateBlockEntity(BlockPos pos, BlockState state) {
@@ -57,5 +65,16 @@ public class StateBlockEntity extends BlockEntity {
 		States.LOGGER.info("destroying");
 		list.forEach(chunkPos -> StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.maybeGet(world.getChunk(chunkPos.x, chunkPos.z)).ifPresent(claimedChunkComponent -> claimedChunkComponent.unclaim()));
 		list.clear();
+	}
+
+	@Override
+	public Text getDisplayName() {
+		return Text.translatable("sreen.states.title");
+	}
+
+	@Nullable
+	@Override
+	public ScreenHandler createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
+		return new StatemakerScreenHandler(i, playerInventory);
 	}
 }
