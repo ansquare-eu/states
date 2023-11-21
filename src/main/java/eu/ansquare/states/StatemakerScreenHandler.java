@@ -8,22 +8,28 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.stat.Stat;
+import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
 public class StatemakerScreenHandler extends ScreenHandler {
 	private final Inventory inventory;
-
-	public StatemakerScreenHandler(int syncId, PlayerInventory playerInventory) {
+	private UUID uuid;
+	public StatemakerScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
+		this(syncId, playerInventory, buf.readUuid());
+	}
+	public StatemakerScreenHandler(int syncId, PlayerInventory playerInventory, UUID uuid) {
 		super(States.STATEMAKER_SCREEN_HANDLER, syncId);
+		this.uuid = uuid;
 		this.inventory = new SimpleInventory(3);
 		//some inventories do custom logic when a player opens it.
 		inventory.onOpen(playerInventory.player);
-
 		//This will place the slot in the correct locations for a 3x3 Grid. The slots exist on both server and client!basic screen
 		//This will not render the background of the slots however, this is the Screens job
 		int m;
@@ -50,6 +56,7 @@ public class StatemakerScreenHandler extends ScreenHandler {
 	}
 
 	public ItemStack quickTransfer(PlayerEntity player, int fromIndex) {
+		States.LOGGER.info(uuid.toString());
 		ItemStack newStack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(fromIndex);
 		if (slot != null && slot.hasStack()) {
