@@ -2,6 +2,7 @@ package eu.ansquare.states;
 
 import eu.ansquare.states.block.StatesBlocks;
 import eu.ansquare.states.item.StatesItems;
+import eu.ansquare.states.network.StatesNetwork;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
 import net.minecraft.item.ItemStack;
@@ -27,6 +28,7 @@ public class States implements ModInitializer {
 		LOGGER.info("Hello Quilt world from {}!", mod.metadata().name());
 		StatesBlocks.init();
 		StatesItems.init();
+		StatesNetwork.initC2S();
 		Registry.register(Registries.SCREEN_HANDLER_TYPE, new Identifier(MODID, "state_screen"), STATEMAKER_SCREEN_HANDLER);
 	}
 }

@@ -14,6 +14,7 @@ import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.stat.Stat;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -21,13 +22,15 @@ import java.util.UUID;
 public class StatemakerScreenHandler extends ScreenHandler {
 	private final Inventory inventory;
 	private UUID uuid;
+	public BlockPos pos;
 	public StatemakerScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-		this(syncId, playerInventory, buf.readUuid());
+		this(syncId, playerInventory, buf.readUuid(), new SimpleInventory(4), buf.readBlockPos());
 	}
-	public StatemakerScreenHandler(int syncId, PlayerInventory playerInventory, UUID uuid) {
+	public StatemakerScreenHandler(int syncId, PlayerInventory playerInventory, UUID uuid, Inventory inventory, BlockPos pos) {
 		super(States.STATEMAKER_SCREEN_HANDLER, syncId);
+		this.pos = pos;
 		this.uuid = uuid;
-		this.inventory = new SimpleInventory(3);
+		this.inventory = inventory;
 		//some inventories do custom logic when a player opens it.
 		inventory.onOpen(playerInventory.player);
 		//This will place the slot in the correct locations for a 3x3 Grid. The slots exist on both server and client!basic screen
