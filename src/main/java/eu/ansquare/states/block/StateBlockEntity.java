@@ -22,6 +22,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.stat.Stat;
 import net.minecraft.text.Text;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
@@ -34,10 +35,7 @@ import java.util.*;
 
 public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory, Inventory {
 	public static void itemStackLoad(ServerPlayerEntity player, BlockPos pos, int i){
-		BlockEntity entity = player.getServerWorld().getBlockEntity(pos);
-		if(entity instanceof StateBlockEntity stateBlock){
-			stateBlock.loadFromStack(i);
-		}
+		States.LOGGER.info("all");
 	}
 	public Set<ChunkPos> list = new HashSet<>();
 	public UUID uuid = UUID.randomUUID();
@@ -89,9 +87,11 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 	}
 	public void loadFromStack(int stackint){
 		ItemStack stack = inventory.get(stackint);
+		States.LOGGER.info(stack.toString());
 		if(stackint == 0){
 			NbtList list1 = stack.getOrCreateNbt().getList("chunks", 11);
 			addFromNbtList(list1);
+			markDirty();
 		}
 	}
 
