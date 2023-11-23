@@ -1,19 +1,31 @@
 package eu.ansquare.states;
 
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import eu.ansquare.states.block.StatesBlocks;
 import eu.ansquare.states.item.StatesItems;
 import eu.ansquare.states.network.StatesNetwork;
+import eu.ansquare.states.util.StatePermission;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.screen.ScreenHandlerType;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
+import org.quiltmc.qsl.command.api.CommandRegistrationCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import static com.mojang.brigadier.arguments.StringArgumentType.*;
+import static net.minecraft.command.argument.EntityArgumentType.entities;
+import static net.minecraft.command.argument.EntityArgumentType.player;
+import static net.minecraft.server.command.CommandManager.literal;
+import static net.minecraft.server.command.CommandManager.argument;
+import static net.minecraft.server.command.CommandManager.*;
 
 public class States implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
@@ -29,6 +41,14 @@ public class States implements ModInitializer {
 		StatesBlocks.init();
 		StatesItems.init();
 		StatesNetwork.initC2S();
+		CommandRegistrationCallback.EVENT.register((dispatcher, buildContext, environment) -> dispatcher.register(literal("state")
+				.then(argument("player", player())
+						.executes(context -> {
+							PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
+							StatePermission permission = StatePermission.permissionAt(player.getWorld().getChunk(player.getBlockPos()), player);
+							player.sendMessage(permission.result, false);
+			return 1;
+		}))));
 		Registry.register(Registries.SCREEN_HANDLER_TYPE, new Identifier(MODID, "state_screen"), STATEMAKER_SCREEN_HANDLER);
 	}
 }

@@ -28,7 +28,6 @@ public class NotepadItem extends Item {
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {
 		ItemStack stack = playerEntity.getStackInHand(hand);
 
-		playerEntity.sendMessage(Text.literal("yes"), false);
 		ChunkPos pos = playerEntity.getChunkPos();
 		NbtCompound nbt = stack.getOrCreateNbt();
 		NbtList list = nbt.getList("chunks",11);

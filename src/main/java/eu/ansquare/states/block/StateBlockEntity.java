@@ -3,6 +3,7 @@ package eu.ansquare.states.block;
 import eu.ansquare.states.StatemakerScreenHandler;
 import eu.ansquare.states.States;
 import eu.ansquare.states.cca.StatesChunkComponents;
+import eu.ansquare.states.cca.StatesEntityComponents;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -95,22 +96,29 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 	public void addPlayers(NbtList list, int i){
 		if (i == 1){
 			list.forEach(nbtElement -> {
-				if(!allows.contains(nbtElement)){
+				UUID uuid1 = NbtHelper.toUuid(nbtElement);
+				if(!allows.contains(nbtElement) && !denys.contains(nbtElement)){
+					StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(getWorld().getServer().getPlayerManager().getPlayer(uuid1)).ifPresent(citizenComponent -> citizenComponent.addAllow(uuid));
 					allows.add(allows.size(), nbtElement);
 				}
 			});
 		} else if (i == 2){
 			list.forEach(nbtElement -> {
-				if(!denys.contains(nbtElement)){
+				UUID uuid1 = NbtHelper.toUuid(nbtElement);
+				if(!allows.contains(nbtElement) && !denys.contains(nbtElement)){
+					StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(getWorld().getServer().getPlayerManager().getPlayer(uuid1)).ifPresent(citizenComponent -> citizenComponent.addDeny(uuid));
 					denys.add(denys.size(), nbtElement);
 				}
 			});
 		}
 	}
 	public void destroy(){
-		States.LOGGER.info("destroying");
 		list.forEach(chunkPos -> StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.maybeGet(world.getChunk(chunkPos.x, chunkPos.z)).ifPresent(claimedChunkComponent -> claimedChunkComponent.unclaim()));
 		list.clear();
+		allows.forEach(nbtElement -> StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(NbtHelper.toUuid(nbtElement)).ifPresent(citizenComponent -> citizenComponent.removeAllow(uuid)));
+		allows.clear();
+		denys.forEach(nbtElement -> StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(NbtHelper.toUuid(nbtElement)).ifPresent(citizenComponent -> citizenComponent.removeDeny(uuid)));
+		denys.clear();
 	}
 	public void loadFromStack(int stackint){
 		ItemStack stack = inventory.get(stackint);

@@ -6,6 +6,7 @@ import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
+import dev.onyxstudios.cca.api.v3.entity.RespawnCopyStrategy;
 import eu.ansquare.states.States;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
@@ -16,5 +17,6 @@ public class StatesEntityComponents implements EntityComponentInitializer {
 
 	public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
 		registry.registerFor(LivingEntity.class, CITIZEN_COMPONENT, world -> new CitizenComponent());
+		registry.registerForPlayers(CITIZEN_COMPONENT, player -> new CitizenComponent(), RespawnCopyStrategy.ALWAYS_COPY);
 	}
 }

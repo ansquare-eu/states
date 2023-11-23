@@ -57,12 +57,12 @@ public class StatemakerScreen extends HandledScreen<StatemakerScreenHandler> {
 		super.init();
 		// Center the title
 		titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
-		button_load = ButtonWidget.builder(Text.translatable("screen.gui.load.chunk"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 0}))).positionAndSize(this.x + 21, this.y + 54, 66, 18).build();
-		button_allows = ButtonWidget.builder(Text.translatable("screen.gui.load.allow"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 1}))).positionAndSize(this.x + 65, this.y + 16, 66, 18).build();
+		button_load = ButtonWidget.builder(Text.translatable("screen.gui.load.chunk"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 0}))).positionAndSize(this.x + 45, this.y + 34, 18, 18).build();
+		button_allows = ButtonWidget.builder(Text.translatable("screen.gui.load.allow"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 1}))).positionAndSize(this.x + 65, this.y + 16, 18, 18).build();
 		this.addDrawableChild(button_load);
 		this.addDrawableChild(button_allows);
-		button_denys = ButtonWidget.builder(Text.translatable("screen.gui.load.deny"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 2}))).positionAndSize(this.x + 65, this.y + 34, 66, 18).build();
-		button_tps = ButtonWidget.builder(Text.translatable("screen.gui.load.tp"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 3}))).positionAndSize(this.x + 65, this.y + 52, 66, 18).build();
+		button_denys = ButtonWidget.builder(Text.translatable("screen.gui.load.deny"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 2}))).positionAndSize(this.x + 65, this.y + 34, 18, 18).build();
+		button_tps = ButtonWidget.builder(Text.translatable("screen.gui.load.tp"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 3}))).positionAndSize(this.x + 65, this.y + 52, 18, 18).build();
 		this.addDrawableChild(button_denys);
 		this.addDrawableChild(button_tps);
 
