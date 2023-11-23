@@ -38,13 +38,13 @@ public class StatemakerScreenHandler extends ScreenHandler {
 		int m;
 		int l;
 		//Our inventory
-		this.addSlot(new Slot(inventory, 0, 25, 34) {
+		this.addSlot(new Slot(inventory, 0, 26, 35) {
 			public boolean canInsert(ItemStack stack) {
 				return stack.getItem() instanceof NotepadItem;
 			}
 		});
 		for (l = 0; l < 3; ++l) {
-			this.addSlot(new Slot(inventory, l + 1, 133, 16 + l * 18){
+			this.addSlot(new Slot(inventory, l + 1, 134, 17 + l * 18){
 				public boolean canInsert(ItemStack stack) {
 					return stack.getItem() instanceof NotepadItem;
 				}
