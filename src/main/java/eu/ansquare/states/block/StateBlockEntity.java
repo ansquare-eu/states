@@ -38,6 +38,10 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 		States.LOGGER.info("all");
 	}
 	public Set<ChunkPos> list = new HashSet<>();
+	public NbtList allows = new NbtList();
+	public NbtList denys = new NbtList();
+	public NbtList tps = new NbtList();
+
 	public UUID uuid = UUID.randomUUID();
 	public DefaultedList<ItemStack> inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
 	public StateBlockEntity(BlockPos pos, BlockState state) {
@@ -52,6 +56,10 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 			xs.addLast(chunkPos.x);
 			zs.addLast(chunkPos.z);
 		});
+		nbt.put("allow", allows);
+		nbt.put("denys", denys);
+		nbt.put("tps", tps);
+
 		nbt.putIntArray("xs", xs);
 		nbt.putIntArray("zs", zs);
 		nbt.putUuid("stateid", uuid);
@@ -60,6 +68,10 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 	}
 	public void readNbt(NbtCompound nbt) {
 		super.readNbt(nbt);
+		allows = nbt.getList("allow", 11);
+		denys = nbt.getList("denys", 11);
+		tps = nbt.getList("tps", 11);
+
 		inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
 		Inventories.readNbt(nbt, this.inventory);
 		int[] xs = nbt.getIntArray("xs");
@@ -69,13 +81,28 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 			list.add(new ChunkPos(xs[i], zs[i]));
 		}
 	}
-	public void addFromNbtList(NbtList nbtlist){
+	public void addChunksFromNbtList(NbtList nbtlist){
 		for (int i = 0; i < nbtlist.size(); i++) {
 			int[] array = nbtlist.getIntArray(i);
 			ChunkPos pos = new ChunkPos(array[0], array[1]);
 			StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.maybeGet(world.getChunk(pos.x, pos.z)).ifPresent(claimedChunkComponent -> {
 				if(claimedChunkComponent.claim(this).print(pos).valid){
 					list.add(pos);
+				}
+			});
+		}
+	}
+	public void addPlayers(NbtList list, int i){
+		if (i == 1){
+			list.forEach(nbtElement -> {
+				if(!allows.contains(nbtElement)){
+					allows.add(allows.size(), nbtElement);
+				}
+			});
+		} else if (i == 2){
+			list.forEach(nbtElement -> {
+				if(!denys.contains(nbtElement)){
+					denys.add(denys.size(), nbtElement);
 				}
 			});
 		}
@@ -90,7 +117,11 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 		States.LOGGER.info(stack.toString());
 		if(stackint == 0){
 			NbtList list1 = stack.getOrCreateNbt().getList("chunks", 11);
-			addFromNbtList(list1);
+			addChunksFromNbtList(list1);
+			markDirty();
+		} else {
+			NbtList list1 = stack.getOrCreateNbt().getList("players", 11);
+			addPlayers(list1, stackint);
 			markDirty();
 		}
 	}

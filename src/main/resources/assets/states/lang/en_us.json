@@ -1,0 +1,8 @@
+{
+  "screen.gui.load.chunk": "Load chunks",
+  "screen.gui.load.allow": "Load allowed",
+  "screen.gui.load.deny": "Load banned",
+  "screen.gui.load.tp": "Load teleporting",
+  "block.states.statemaker": "Statemaker",
+  "item.states.notepad": "Notepad"
+}
