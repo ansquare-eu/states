@@ -44,12 +44,8 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 			cir.setReturnValue(true);
 		}
 	}
-	@Inject(method = "canPlaceOn", at = @At("TAIL"), cancellable = true)
-	public void onCanPlaceOn(BlockPos pos, Direction facing, ItemStack stack, CallbackInfoReturnable<Boolean> cir) {
-		if(!StatePermission.permissionAt(getWorld().getChunk(pos), (PlayerEntity) (Object) this).maybuild){
-			States.LOGGER.info(StatePermission.permissionAt(getWorld().getChunk(pos), (PlayerEntity) (Object) this).result.getString());
-		}
-	}
+
+
 	@Inject(method = "interact", at = @At("HEAD"))
 	public void onInteract(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir){
 		if(entity instanceof ServerPlayerEntity && !getWorld().isClient()){

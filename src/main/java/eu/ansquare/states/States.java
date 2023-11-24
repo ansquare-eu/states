@@ -4,6 +4,7 @@ import eu.ansquare.states.block.StatesBlocks;
 import eu.ansquare.states.item.StatesItems;
 import eu.ansquare.states.network.StatesNetwork;
 import eu.ansquare.states.api.StatePermission;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -42,6 +43,7 @@ public class States implements ModInitializer {
 							player.sendMessage(permission.result, false);
 			return 1;
 		}))));
+		//UseItemCallback.EVENT.register((player, world, hand) -> );
 		Registry.register(Registries.SCREEN_HANDLER_TYPE, new Identifier(MODID, "state_screen"), STATEMAKER_SCREEN_HANDLER);
 	}
 }
