@@ -1,4 +1,4 @@
-package eu.ansquare.states.util;
+package eu.ansquare.states.api;
 
 import eu.ansquare.states.cca.CitizenComponent;
 import eu.ansquare.states.cca.ClaimedChunkComponent;
