@@ -152,12 +152,12 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 	@Nullable
 	@Override
 	public ScreenHandler createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-		return new StatemakerScreenHandler(i, playerInventory, owner, this, this.getPos());
+		return new StatemakerScreenHandler(i, playerInventory, owner, this, this.getPos(), new int[]{list.size(), allows.size(), denys.size(), tps.size()});
 	}
 
 	@Override
 	public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-		buf.writeUuid(owner).writeBlockPos(this.getPos());
+		buf.writeUuid(owner).writeBlockPos(this.getPos()).writeIntArray(new int[]{list.size(), allows.size(), denys.size(), tps.size()});
 	}
 	@Override
 	public int size() {

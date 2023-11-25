@@ -23,14 +23,16 @@ public class StatemakerScreenHandler extends ScreenHandler {
 	private final Inventory inventory;
 	private UUID uuid;
 	public BlockPos pos;
+	public int[] sizes;
 	public StatemakerScreenHandler(int syncId, PlayerInventory playerInventory, PacketByteBuf buf) {
-		this(syncId, playerInventory, buf.readUuid(), new SimpleInventory(4), buf.readBlockPos());
+		this(syncId, playerInventory, buf.readUuid(), new SimpleInventory(4), buf.readBlockPos(), buf.readIntArray());
 	}
-	public StatemakerScreenHandler(int syncId, PlayerInventory playerInventory, UUID uuid, Inventory inventory, BlockPos pos) {
+	public StatemakerScreenHandler(int syncId, PlayerInventory playerInventory, UUID uuid, Inventory inventory, BlockPos pos, int[] sizes) {
 		super(States.STATEMAKER_SCREEN_HANDLER, syncId);
 		this.pos = pos;
 		this.uuid = uuid;
 		this.inventory = inventory;
+		this.sizes = sizes;
 		//some inventories do custom logic when a player opens it.
 		inventory.onOpen(playerInventory.player);
 		//This will place the slot in the correct locations for a 3x3 Grid. The slots exist on both server and client!basic screen
