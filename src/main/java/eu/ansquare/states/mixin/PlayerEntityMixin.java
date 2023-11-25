@@ -46,8 +46,9 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	}*/
 
 
-	@Inject(method = "interact", at = @At("HEAD"))
+	@Inject(method = "interact", at = @At("HEAD"), cancellable = true)
 	public void onInteract(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> cir){
+
 		if(entity instanceof ServerPlayerEntity && !getWorld().isClient()){
 			if(getStackInHand(hand).isOf(StatesItems.NOTEPAD)){
 				NbtCompound nbt = getStackInHand(hand).getOrCreateNbt();

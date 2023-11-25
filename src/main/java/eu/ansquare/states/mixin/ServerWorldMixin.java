@@ -47,12 +47,12 @@ public abstract class ServerWorldMixin extends World implements StructureWorldAc
 		super(worldProperties, registryKey, registryManager, dimension, profiler, client, debug, seed, maxChainedNeighborUpdates);
 	}
 
-	@Inject(method = "canPlayerModifyAt", at = @At("HEAD"), cancellable = true)
+	/*@Inject(method = "canPlayerModifyAt", at = @At("HEAD"), cancellable = true)
 	public void onPlace(PlayerEntity player, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
 		if(!StatePermission.permissionAt(getChunk(pos), player).maybuild){
 
 			cir.setReturnValue(false);
 		}
 
-	}
+	}*/
 }
