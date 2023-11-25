@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "states:oak_statemaker",
+    "states:spruce_statemaker",
+    "states:birch_statemaker",
+    "states:jungle_statemaker",
+    "states:acacia_statemaker",
+    "states:dark_oak_statemaker",
+    "states:bamboo_statemaker",
+    "states:cherry_statemaker",
+    "states:crimson_statemaker",
+    "states:warped_statemaker"
+  ]
+}

@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "states:block/oak_statemaker" }
+    "": { "model": "states:block/warped_statemaker" }
   }
 }

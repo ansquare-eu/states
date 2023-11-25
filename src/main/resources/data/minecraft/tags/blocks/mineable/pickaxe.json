@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "states:stone_statemaker",
+    "states:deepslate_statemaker",
+    "states:amethyst_statemaker"
+  ]
+}

@@ -4,6 +4,19 @@
   "screen.gui.load.deny": "Load banned",
   "screen.gui.load.tp": "Load teleporting",
   "screen.states.title": "State of player %1$s",
-  "block.states.statemaker": "Statemaker",
-  "item.states.notepad": "Notepad"
+  "item.states.notepad": "Notepad",
+  "block.states.oak_statemaker": "Oak statemaker",
+  "block.states.spruce_statemaker": "Spruce statemaker",
+  "block.states.birch_statemaker": "Birch statemaker",
+  "block.states.jungle_statemaker": "Jungle statemaker",
+  "block.states.acacia_statemaker": "Acacia statemaker",
+  "block.states.dark_oak_statemaker": "Dark oak statemaker",
+  "block.states.bamboo_statemaker": "Bamboo statemaker",
+  "block.states.cherry_statemaker": "Cherry statemaker",
+  "block.states.crimson_statemaker": "Crimson statemaker",
+  "block.states.warped_statemaker": "Warped statemaker",
+  "block.states.stone_statemaker": "Stone statemaker",
+  "block.states.deepslate_statemaker": "Deepslate statemaker",
+  "block.states.amethyst_statemaker": "Amethyst statemaker"
+
 }

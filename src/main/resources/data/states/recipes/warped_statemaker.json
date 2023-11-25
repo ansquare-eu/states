@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "minecraft:iron_ingot"
+    },
+    "o": {
+      "item": "minecraft:stone"
+    },
+    "d": {
+      "item": "minecraft:redstone_dust"
+    },
+    "t": {
+      "item": "minecraft:diamond"
+    },
+    "n": {
+      "item": "minecraft:warped_planks"
+    }
+  },
+  "pattern": [
+    "#t#",
+    "non",
+    "ndn"
+  ],
+  "result": {
+    "count": 6,
+    "item": "states:warped_statemaker"
+  },
+  "show_notification": true
+}
