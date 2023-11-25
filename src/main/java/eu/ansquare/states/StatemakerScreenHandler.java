@@ -64,7 +64,6 @@ public class StatemakerScreenHandler extends ScreenHandler {
 	}
 
 	public ItemStack quickTransfer(PlayerEntity player, int fromIndex) {
-		States.LOGGER.info(uuid.toString());
 		ItemStack newStack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(fromIndex);
 		if (slot != null && slot.hasStack()) {

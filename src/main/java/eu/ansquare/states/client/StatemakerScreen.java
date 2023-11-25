@@ -6,6 +6,7 @@ import eu.ansquare.states.States;
 import eu.ansquare.states.network.StatesNetwork;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
+import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketByteBuf;
@@ -57,12 +58,12 @@ public class StatemakerScreen extends HandledScreen<StatemakerScreenHandler> {
 		super.init();
 		// Center the title
 		titleX = (backgroundWidth - textRenderer.getWidth(title)) / 2;
-		button_load = ButtonWidget.builder(Text.translatable("screen.gui.load.chunk"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 0}))).positionAndSize(this.x + 45, this.y + 34, 18, 18).build();
-		button_allows = ButtonWidget.builder(Text.translatable("screen.gui.load.allow"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 1}))).positionAndSize(this.x + 65, this.y + 16, 18, 18).build();
+		button_load = ButtonWidget.builder(Text.literal("0"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 0}))).positionAndSize(this.x + 45, this.y + 34, 18, 18).tooltip(Tooltip.create(Text.translatable("screen.gui.load.chunk"))).build();
+		button_allows = ButtonWidget.builder(Text.literal("0"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 1}))).positionAndSize(this.x + 113, this.y + 16, 18, 18).tooltip(Tooltip.create(Text.translatable("screen.gui.load.allow"))).build();
 		this.addDrawableChild(button_load);
 		this.addDrawableChild(button_allows);
-		button_denys = ButtonWidget.builder(Text.translatable("screen.gui.load.deny"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 2}))).positionAndSize(this.x + 65, this.y + 34, 18, 18).build();
-		button_tps = ButtonWidget.builder(Text.translatable("screen.gui.load.tp"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 3}))).positionAndSize(this.x + 65, this.y + 52, 18, 18).build();
+		button_denys = ButtonWidget.builder(Text.literal("0"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 2}))).positionAndSize(this.x + 113, this.y + 34, 18, 18).tooltip(Tooltip.create(Text.translatable("screen.gui.load.deny"))).build();
+		button_tps = ButtonWidget.builder(Text.literal("0"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 3}))).positionAndSize(this.x + 113, this.y + 52, 18, 18).tooltip(Tooltip.create(Text.translatable("screen.gui.load.tp"))).build();
 		this.addDrawableChild(button_denys);
 		this.addDrawableChild(button_tps);
 

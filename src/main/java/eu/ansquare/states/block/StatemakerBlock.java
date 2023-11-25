@@ -1,8 +1,11 @@
 package eu.ansquare.states.block;
 
+import eu.ansquare.states.States;
 import eu.ansquare.states.item.StatesItems;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.ChestBlockEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.NamedScreenHandlerFactory;
@@ -26,9 +29,18 @@ public class StatemakerBlock extends BlockWithEntity {
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
+	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
+		if(!world.isClient) {
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			if (blockEntity instanceof StateBlockEntity stateBlock) {
+				stateBlock.own(placer.getUuid());
+			}
+		}
 
+	}
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		States.LOGGER.info("yesd");
 		if (!world.isClient){
 			NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
 
@@ -40,6 +52,7 @@ public class StatemakerBlock extends BlockWithEntity {
 
 		return ActionResult.PASS;
 	}
+
 	public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
 		super.onBreak(world, pos, state, player);
 		BlockEntity blockEntity1 = world.getBlockEntity(pos);

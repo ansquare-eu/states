@@ -1,6 +1,7 @@
 package eu.ansquare.states;
 
 import eu.ansquare.states.api.StatePermission;
+import eu.ansquare.states.block.StateBlockEntity;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;

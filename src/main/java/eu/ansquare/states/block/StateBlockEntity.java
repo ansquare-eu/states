@@ -44,9 +44,17 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 	public NbtList tps = new NbtList();
 
 	public UUID uuid = UUID.randomUUID();
+	public UUID owner = uuid;
+	public String ownername = "";
 	public DefaultedList<ItemStack> inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
 	public StateBlockEntity(BlockPos pos, BlockState state) {
 		super(StatesBlocks.STATE_BLOCK_ENTITY, pos, state);
+	}
+	public void own(UUID owner){
+		this.owner = owner;
+		allows.add(allows.size(), NbtHelper.fromUuid(owner));
+		StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(getWorld().getServer().getPlayerManager().getPlayer(owner)).ifPresent(citizenComponent -> citizenComponent.addAllow(uuid));
+		ownername = getWorld().getServer().getPlayerManager().getPlayer(owner).getDisplayName().getString();
 	}
 	@Override
 	public void writeNbt(NbtCompound nbt) {
@@ -57,10 +65,11 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 			xs.addLast(chunkPos.x);
 			zs.addLast(chunkPos.z);
 		});
+		nbt.putString("ownername", ownername);
 		nbt.put("allow", allows);
 		nbt.put("denys", denys);
 		nbt.put("tps", tps);
-
+		nbt.putUuid("owner", owner);
 		nbt.putIntArray("xs", xs);
 		nbt.putIntArray("zs", zs);
 		nbt.putUuid("stateid", uuid);
@@ -69,10 +78,11 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 	}
 	public void readNbt(NbtCompound nbt) {
 		super.readNbt(nbt);
+		ownername = nbt.getString("ownername");
 		allows = nbt.getList("allow", 11);
 		denys = nbt.getList("denys", 11);
 		tps = nbt.getList("tps", 11);
-
+		owner = nbt.getUuid("owner");
 		inventory = DefaultedList.ofSize(4, ItemStack.EMPTY);
 		Inventories.readNbt(nbt, this.inventory);
 		int[] xs = nbt.getIntArray("xs");
@@ -136,18 +146,18 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 
 	@Override
 	public Text getDisplayName() {
-		return Text.translatable("sreen.states.title");
+		return Text.translatable("screen.states.title", new Object[]{ownername});
 	}
 
 	@Nullable
 	@Override
 	public ScreenHandler createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-		return new StatemakerScreenHandler(i, playerInventory, uuid, this, this.getPos());
+		return new StatemakerScreenHandler(i, playerInventory, owner, this, this.getPos());
 	}
 
 	@Override
 	public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-		buf.writeUuid(uuid).writeBlockPos(this.getPos());
+		buf.writeUuid(owner).writeBlockPos(this.getPos());
 	}
 	@Override
 	public int size() {

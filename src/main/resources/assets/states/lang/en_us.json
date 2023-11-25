@@ -3,6 +3,7 @@
   "screen.gui.load.allow": "Load allowed",
   "screen.gui.load.deny": "Load banned",
   "screen.gui.load.tp": "Load teleporting",
+  "screen.states.title": "State of player %1$s",
   "block.states.statemaker": "Statemaker",
   "item.states.notepad": "Notepad"
 }
