@@ -6,6 +6,8 @@ import eu.ansquare.states.cca.StatesChunkComponents;
 import eu.ansquare.states.cca.StatesEntityComponents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
 public class StatePermission {
@@ -14,6 +16,14 @@ public class StatePermission {
 	protected StatePermission(String result, boolean maybuild){
 		this.result = Text.literal(result);
 		this.maybuild = maybuild;
+	}
+	public static boolean isClaimed(World world, BlockPos pos){
+		Chunk chunk = world.getChunk(pos);
+		if(StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.maybeGet(chunk).isPresent()){
+			ClaimedChunkComponent chunkComponent = StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.get(chunk);
+			return chunkComponent.claimed;
+		}
+		return false;
 	}
 	public static StatePermission permissionAt(Chunk chunk, PlayerEntity player){
 		if(StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(player).isPresent() && StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.maybeGet(chunk).isPresent()){

@@ -2,6 +2,7 @@ package eu.ansquare.states;
 
 import eu.ansquare.states.api.StatePermission;
 import eu.ansquare.states.block.StateBlockEntity;
+import eu.ansquare.states.block.StatesBlocks;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -27,7 +28,9 @@ public class StatesEvents {
 		});
 		UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
 			if(!world.isClient()){
-				if(!StatePermission.permissionAt(world.getChunk(hitResult.getBlockPos()), player).maybuild){
+				if(!StatePermission.permissionAt(world.getChunk(hitResult.getBlockPos().offset(hitResult.getSide())), player).maybuild){
+					return ActionResult.FAIL;
+				} else if (StatePermission.isClaimed(world, hitResult.getBlockPos().offset(hitResult.getSide())) && player.getStackInHand(hand).isOf(StatesBlocks.STATEMAKER.asItem())) {
 					return ActionResult.FAIL;
 				}
 			}
