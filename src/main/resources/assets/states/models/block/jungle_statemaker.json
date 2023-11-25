@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_bottom_top",
+  "textures": {
+    "bottom": "minecraft:block/jungle_planks",
+    "side": "states:block/statemaker_jungle",
+    "top": "states:block/statemaker_top"
+  }
+}

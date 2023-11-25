@@ -9,8 +9,11 @@ import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import org.quiltmc.loader.api.ModContainer;
@@ -30,10 +33,12 @@ public class States implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("States");
 	public static final String MODID = "states";
 	public static final ExtendedScreenHandlerType<StatemakerScreenHandler> STATEMAKER_SCREEN_HANDLER = new ExtendedScreenHandlerType<>(StatemakerScreenHandler::new);
+	public static final TagKey<Item> STATEMAKERS = TagKey.of(RegistryKeys.ITEM, new Identifier(MODID, "statemakers"));
 
 	@Override
 	public void onInitialize(ModContainer mod) {
 		LOGGER.info("Hello Quilt world from {}!", mod.metadata().name());
+
 		StatesBlocks.init();
 		StatesItems.init();
 		StatesNetwork.initC2S();

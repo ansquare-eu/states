@@ -30,7 +30,7 @@ public class StatesEvents {
 			if(!world.isClient()){
 				if(!StatePermission.permissionAt(world.getChunk(hitResult.getBlockPos().offset(hitResult.getSide())), player).maybuild){
 					return ActionResult.FAIL;
-				} else if (StatePermission.isClaimed(world, hitResult.getBlockPos().offset(hitResult.getSide())) && player.getStackInHand(hand).isOf(StatesBlocks.STATEMAKER.asItem())) {
+				} else if (StatePermission.isClaimed(world, hitResult.getBlockPos().offset(hitResult.getSide())) && player.getStackInHand(hand).isIn(States.STATEMAKERS)) {
 					return ActionResult.FAIL;
 				}
 			}

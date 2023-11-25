@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_bottom_top",
+  "textures": {
+    "bottom": "minecraft:block/warped_planks",
+    "side": "states:block/statemaker_warped",
+    "top": "states:block/statemaker_top"
+  }
+}

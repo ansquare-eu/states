@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "states:block/crimson_statemaker" }
+  }
+}

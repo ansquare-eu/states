@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "states:block/spruce_statemaker"}
+  }
+}

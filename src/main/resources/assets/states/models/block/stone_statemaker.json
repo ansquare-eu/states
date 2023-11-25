@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_bottom_top",
+  "textures": {
+    "bottom": "minecraft:block/stone",
+    "side": "states:block/statemaker_stone",
+    "top": "states:block/statemaker_top"
+  }
+}
