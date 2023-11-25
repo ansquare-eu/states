@@ -38,12 +38,12 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
 		super(entityType, world);
 	}
-    @Inject(method = "isBlockBreakingRestricted", at = @At("HEAD"), cancellable = true)
+  /*  @Inject(method = "isBlockBreakingRestricted", at = @At("HEAD"), cancellable = true)
 	public void onIsBlockBreakingRestricted(World world, BlockPos pos, GameMode gameMode, CallbackInfoReturnable<Boolean> cir) {
 		if(!StatePermission.permissionAt(world.getChunk(pos), (PlayerEntity) (Object) this).maybuild){
 			cir.setReturnValue(true);
 		}
-	}
+	}*/
 
 
 	@Inject(method = "interact", at = @At("HEAD"))
