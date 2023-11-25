@@ -50,7 +50,12 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 	public StateBlockEntity(BlockPos pos, BlockState state) {
 		super(StatesBlocks.STATE_BLOCK_ENTITY, pos, state);
 	}
-	public void own(UUID owner){
+	public void init(UUID owner, ChunkPos pos){
+		StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.maybeGet(world.getChunk(pos.x, pos.z)).ifPresent(claimedChunkComponent -> {
+			if(claimedChunkComponent.claim(this).print(pos).valid){
+				list.add(pos);
+			}
+		});
 		this.owner = owner;
 		allows.add(allows.size(), NbtHelper.fromUuid(owner));
 		StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(getWorld().getServer().getPlayerManager().getPlayer(owner)).ifPresent(citizenComponent -> citizenComponent.addAllow(uuid));

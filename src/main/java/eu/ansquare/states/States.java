@@ -42,7 +42,7 @@ public class States implements ModInitializer {
 						.executes(context -> {
 							PlayerEntity player = EntityArgumentType.getPlayer(context, "player");
 							StatePermission permission = StatePermission.permissionAt(player.getWorld().getChunk(player.getBlockPos()), player);
-							player.sendMessage(permission.result, false);
+							context.getSource().getPlayer().sendMessage(permission.result, false);
 			return 1;
 		}))));
 		StatesEvents.init();
