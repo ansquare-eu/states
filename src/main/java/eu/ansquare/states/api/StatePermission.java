@@ -17,6 +17,9 @@ public class StatePermission {
 		this.result = Text.literal(result);
 		this.maybuild = maybuild;
 	}
+	public String toString(){
+		return result.getString();
+	}
 	public static boolean isClaimed(World world, BlockPos pos){
 		Chunk chunk = world.getChunk(pos);
 		if(StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.maybeGet(chunk).isPresent()){
