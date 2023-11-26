@@ -9,7 +9,7 @@
       "item": "minecraft:stone"
     },
     "d": {
-      "item": "minecraft:redstone_dust"
+      "item": "minecraft:redstone"
     },
     "t": {
       "item": "minecraft:diamond"
@@ -24,7 +24,7 @@
     "ndn"
   ],
   "result": {
-    "count": 6,
+    "count": 1,
     "item": "states:deepslate_statemaker"
   },
   "show_notification": true

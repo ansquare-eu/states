@@ -41,7 +41,6 @@ public class StatemakerBlock extends BlockWithEntity {
 	}
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-		States.LOGGER.info("yesd");
 		if (!world.isClient){
 			NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
 

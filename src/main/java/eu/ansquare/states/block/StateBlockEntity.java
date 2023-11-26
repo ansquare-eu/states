@@ -130,9 +130,9 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 	public void destroy(){
 		list.forEach(chunkPos -> StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.maybeGet(world.getChunk(chunkPos.x, chunkPos.z)).ifPresent(claimedChunkComponent -> claimedChunkComponent.unclaim()));
 		list.clear();
-		allows.forEach(nbtElement -> StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(NbtHelper.toUuid(nbtElement)).ifPresent(citizenComponent -> citizenComponent.removeAllow(uuid)));
+		allows.forEach(nbtElement -> StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(getWorld().getServer().getPlayerManager().getPlayer(NbtHelper.toUuid(nbtElement))).ifPresent(citizenComponent -> citizenComponent.removeAllow(uuid)));
 		allows.clear();
-		denys.forEach(nbtElement -> StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(NbtHelper.toUuid(nbtElement)).ifPresent(citizenComponent -> citizenComponent.removeDeny(uuid)));
+		denys.forEach(nbtElement -> StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(getWorld().getServer().getPlayerManager().getPlayer(NbtHelper.toUuid(nbtElement))).ifPresent(citizenComponent -> citizenComponent.removeDeny(uuid)));
 		denys.clear();
 	}
 	public void loadFromStack(int stackint){
@@ -146,6 +146,34 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 			NbtList list1 = stack.getOrCreateNbt().getList("players", 11);
 			addPlayers(list1, stackint);
 			markDirty();
+		}
+	}
+	public void clear(int stackint){
+		if(stackint == 0){
+			list.forEach(chunkPos -> {
+					StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.maybeGet(world.getChunk(chunkPos.x, chunkPos.z)).ifPresent(claimedChunkComponent -> claimedChunkComponent.unclaim());
+			});
+			list.clear();
+			StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.maybeGet(getWorld().getChunk(getPos())).ifPresent(claimedChunkComponent -> {
+				if(claimedChunkComponent.claim(this).valid){
+					list.add(getWorld().getChunk(getPos()).getPos());
+				}
+			});
+		} else if (stackint == 1) {
+			allows.forEach(nbtElement -> {
+				UUID uuid1 = NbtHelper.toUuid(nbtElement);
+				StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(getWorld().getServer().getPlayerManager().getPlayer(uuid1)).ifPresent(citizenComponent -> citizenComponent.removeAllow(uuid));
+			});
+			allows.clear();
+			allows.add(allows.size(), NbtHelper.fromUuid(owner));
+			StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(getWorld().getServer().getPlayerManager().getPlayer(owner)).ifPresent(citizenComponent -> citizenComponent.addAllow(uuid));
+
+		} else if (stackint == 2) {
+			denys.forEach(nbtElement -> {
+				UUID uuid1 = NbtHelper.toUuid(nbtElement);
+				StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(uuid1).ifPresent(citizenComponent -> citizenComponent.removeDeny(uuid));
+			});
+			denys.clear();
 		}
 	}
 

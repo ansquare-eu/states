@@ -3,18 +3,14 @@ package eu.ansquare.states.network;
 import eu.ansquare.states.States;
 import eu.ansquare.states.block.StateBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import org.quiltmc.qsl.networking.api.PacketSender;
 
-import java.util.logging.Logger;
-
-public class StateActionPacket {
+public class StateLoadPacket {
 	public static void receive(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender){
 		int[] ints = buf.readIntArray();
 		server.execute(() -> {

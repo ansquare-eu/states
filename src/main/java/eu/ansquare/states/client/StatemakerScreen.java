@@ -28,7 +28,10 @@ public class StatemakerScreen extends HandledScreen<StatemakerScreenHandler> {
 	ButtonWidget button_denys;
 	ButtonWidget button_tps;
 
-
+	ButtonWidget button_clear_chunks;
+	ButtonWidget button_clear_allows;
+	ButtonWidget button_clear_denys;
+	ButtonWidget button_clear_tps;
 
 	public StatemakerScreen(StatemakerScreenHandler handler, PlayerInventory inventory, Text title) {
 		super(handler, inventory, title);
@@ -68,6 +71,14 @@ public class StatemakerScreen extends HandledScreen<StatemakerScreenHandler> {
 		button_tps = ButtonWidget.builder(Text.literal(String.valueOf(sizes[3])), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.TOGGLE_PLAYER_STATE_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 3}))).positionAndSize(this.x + 113, this.y + 52, 18, 18).tooltip(Tooltip.create(Text.translatable("screen.gui.load.tp"))).build();
 		this.addDrawableChild(button_denys);
 		this.addDrawableChild(button_tps);
+		button_clear_chunks = ButtonWidget.builder(Text.literal("X"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.STATE_UNLOAD_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 0}))).positionAndSize(this.x + 25, this.y + 54, 18, 18).tooltip(Tooltip.create(Text.translatable("screen.gui.clear.chunk"))).build();
+		this.addDrawableChild(button_clear_chunks);
+		button_clear_denys = ButtonWidget.builder(Text.literal("X"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.STATE_UNLOAD_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 1}))).positionAndSize(this.x + 153, this.y + 16, 18, 18).tooltip(Tooltip.create(Text.translatable("screen.gui.clear.allow"))).build();
+		this.addDrawableChild(button_clear_denys);
+		button_clear_allows = ButtonWidget.builder(Text.literal("X"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.STATE_UNLOAD_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 2}))).positionAndSize(this.x + 153, this.y + 34, 18, 18).tooltip(Tooltip.create(Text.translatable("screen.gui.clear.deny"))).build();
+		this.addDrawableChild(button_clear_allows);
+		button_clear_tps = ButtonWidget.builder(Text.literal("X"), buttonWidget -> ClientPlayNetworking.send(StatesNetwork.STATE_UNLOAD_PACKET_ID, PacketByteBufs.create().writeIntArray(new int[]{pos.getX(), pos.getY(), pos.getZ(), 3}))).positionAndSize(this.x + 153, this.y + 52, 18, 18).tooltip(Tooltip.create(Text.translatable("screen.gui.clear.tp"))).build();
+		this.addDrawableChild(button_clear_tps);
 
 	}
 
