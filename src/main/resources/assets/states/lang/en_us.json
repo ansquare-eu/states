@@ -32,5 +32,7 @@
   "item.states.notepad.players" : "%1$s players",
   "item.states.stateleporter.tooltip" : "%1$s %2$s %3$s",
   "item.states.stateleporter.nopos" : "You need to save a position first",
-  "item.states.stateleporter.noperm" : "You cannot teleport here"
+  "item.states.stateleporter.noperm" : "You cannot teleport here",
+  "states.cannottp" : "You cannot use this item"
+
 }

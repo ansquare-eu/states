@@ -23,6 +23,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import org.jetbrains.annotations.Nullable;
@@ -36,31 +37,36 @@ public class StateleporterItem extends Item {
 
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {
-	if (!world.isClient && playerEntity.isSneaking()){
-		NbtCompound nbt = playerEntity.getStackInHand(hand).getOrCreateNbt();
-		World world1 = playerEntity.getServer().getWorld(RegistryKey.of(RegistryKeys.WORLD, new Identifier(nbt.getString("world"))));
+		if(world.getGameRules().getBoolean(States.CAN_TELEPORT_TO_STATES)){
+			if (!world.isClient && playerEntity.isSneaking()){
+				NbtCompound nbt = playerEntity.getStackInHand(hand).getOrCreateNbt();
+				World world1 = playerEntity.getServer().getWorld(RegistryKey.of(RegistryKeys.WORLD, new Identifier(nbt.getString("world"))));
 
-		if(world1 != null){
+				if(world1 != null){
 
-			BlockPos pos = NbtHelper.toBlockPos(nbt.getCompound("pos"));
-			Chunk chunk = world1.getChunk(pos);
-			boolean bool = StatePermission.mayTp(chunk, playerEntity);
-			if(bool && !world1.isClient){
-				if(world1.getRegistryKey() == world.getRegistryKey()){
-					playerEntity.teleport(pos.getX(), pos.getY(), pos.getZ());
+					BlockPos pos = NbtHelper.toBlockPos(nbt.getCompound("pos"));
+					Chunk chunk = world1.getChunk(pos);
+					boolean bool = StatePermission.mayTp(chunk, playerEntity);
+					if(bool && !world1.isClient){
+						if(world1.getRegistryKey() == world.getRegistryKey()){
+							playerEntity.teleport(pos.getX(), pos.getY(), pos.getZ());
 
+						}
+						return TypedActionResult.success(playerEntity.getStackInHand(hand));
+
+					} else {
+						playerEntity.sendMessage(Text.translatable("item.states.stateleporter.noperm"), true);
+
+					}
+				} else {
+					playerEntity.sendMessage(Text.translatable("item.states.stateleporter.nopos"), true);
 				}
-				return TypedActionResult.success(playerEntity.getStackInHand(hand));
-
-			} else {
-				playerEntity.sendMessage(Text.translatable("item.states.stateleporter.noperm"), true);
-
+				return TypedActionResult.fail(playerEntity.getStackInHand(hand));
 			}
 		} else {
-			playerEntity.sendMessage(Text.translatable("item.states.stateleporter.nopos"), true);
+			playerEntity.sendMessage(Text.translatable("states.cannottp"), true);
+
 		}
-		return TypedActionResult.fail(playerEntity.getStackInHand(hand));
-	}
 	return TypedActionResult.pass(playerEntity.getStackInHand(hand));
 	}
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {

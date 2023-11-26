@@ -6,6 +6,8 @@ import eu.ansquare.states.network.StatesNetwork;
 import eu.ansquare.states.api.StatePermission;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
+import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,6 +18,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.GameRules;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.quiltmc.qsl.command.api.CommandRegistrationCallback;
@@ -34,6 +37,8 @@ public class States implements ModInitializer {
 	public static final String MODID = "states";
 	public static final ExtendedScreenHandlerType<StatemakerScreenHandler> STATEMAKER_SCREEN_HANDLER = new ExtendedScreenHandlerType<>(StatemakerScreenHandler::new);
 	public static final TagKey<Item> STATEMAKERS = TagKey.of(RegistryKeys.ITEM, new Identifier(MODID, "statemakers"));
+	public static final GameRules.Key<GameRules.BooleanRule> CAN_TELEPORT_TO_STATES =
+			GameRuleRegistry.register("canTpToStates", GameRules.Category.PLAYER, GameRuleFactory.createBooleanRule(true));
 
 	@Override
 	public void onInitialize(ModContainer mod) {
