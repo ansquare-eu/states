@@ -32,7 +32,7 @@ public class CitizenComponent implements Component {
 		tag.put("deny", denylist);
 		NbtList tplist = new NbtList();
 		tp.forEach(uuid -> tplist.add(NbtHelper.fromUuid(uuid)));
-		tag.put("tp", denylist);
+		tag.put("tp", tplist);
 	}
 	public void addAllow(UUID state){
 		allow.add(state);
@@ -47,10 +47,10 @@ public class CitizenComponent implements Component {
 		deny.remove(state);
 	}
 	public void addTp(UUID state){
-		deny.add(state);
+		tp.add(state);
 	}
 	public void removeTp(UUID state){
-		deny.remove(state);
+		tp.remove(state);
 	}
 
 }

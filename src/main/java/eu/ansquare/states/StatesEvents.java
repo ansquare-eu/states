@@ -37,7 +37,7 @@ public class StatesEvents {
 					if(player.getStackInHand(hand).isOf(StatesItems.STATELEPORTER)){
 						return ActionResult.PASS;
 					}
-					if(player.getStackInHand(hand).getItem() instanceof BlockItem || player.isSneaking()){
+					 else if(player.getStackInHand(hand).getItem() instanceof BlockItem){
 						player.sendMessage(Text.translatable("state.deny.build"), true);
 					}else {
 						player.sendMessage(Text.translatable("state.deny.interact"), true);

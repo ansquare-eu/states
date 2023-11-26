@@ -56,7 +56,6 @@ public class StatemakerBlock extends BlockWithEntity {
 						NbtCompound nbt = stack.getOrCreateNbt();
 						nbt.put("pos", NbtHelper.fromBlockPos(player.getBlockPos()));
 						nbt.putString("world", world.getRegistryKey().getValue().toString());
-						States.LOGGER.info(world.getRegistryKey().getValue().toString());
 						return ActionResult.SUCCESS;
 					}
 				}
