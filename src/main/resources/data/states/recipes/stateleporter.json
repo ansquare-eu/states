@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "#": {
+      "item": "minecraft:ender_eye"
+    },
+    "o": {
+      "item": "minecraft:iron_ingot"
+    },
+    "n": {
+      "item": "minecraft:stick"
+    },
+    "t": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "pattern": [
+    "t# ",
+    " o ",
+    "  n"
+  ],
+  "result": {
+    "count": 1,
+    "item": "states:stateleporter"
+  },
+  "show_notification": true
+}

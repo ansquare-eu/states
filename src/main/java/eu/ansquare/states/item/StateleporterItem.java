@@ -52,7 +52,12 @@ public class StateleporterItem extends Item {
 				}
 				return TypedActionResult.success(playerEntity.getStackInHand(hand));
 
+			} else {
+				playerEntity.sendMessage(Text.translatable("item.states.stateleporter.noperm"), true);
+
 			}
+		} else {
+			playerEntity.sendMessage(Text.translatable("item.states.stateleporter.nopos"), true);
 		}
 		return TypedActionResult.fail(playerEntity.getStackInHand(hand));
 	}
