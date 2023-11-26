@@ -6,6 +6,7 @@ import eu.ansquare.states.block.StatesBlocks;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 
 public class StatesEvents {
@@ -13,6 +14,7 @@ public class StatesEvents {
 		AttackEntityCallback.EVENT.register(((player, world, hand, entity, hitResult) -> {
 			if(!world.isClient()){
 				if(!StatePermission.permissionAt(world.getChunk(entity.getBlockPos()), player).maybuild){
+					player.sendMessage(Text.translatable("state.deny.attack"), true);
 					return ActionResult.FAIL;
 				}
 			}

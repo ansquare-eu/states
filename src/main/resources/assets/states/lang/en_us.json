@@ -21,6 +21,12 @@
   "block.states.warped_statemaker": "Warped statemaker",
   "block.states.stone_statemaker": "Stone statemaker",
   "block.states.deepslate_statemaker": "Deepslate statemaker",
-  "block.states.amethyst_statemaker": "Amethyst statemaker"
+  "block.states.amethyst_statemaker": "Amethyst statemaker",
+  "state.deny.break" : "You cannot break blocks here",
+  "state.deny.build" : "You cannot build here",
+  "state.deny.interact": "You cannot use blocks here",
+  "state.deny.attack" : "You cannot attack here",
+  "item.states.notepad.chunks" : "%1$s chunks",
+  "item.states.notepad.players" : "%1$s players"
 
 }

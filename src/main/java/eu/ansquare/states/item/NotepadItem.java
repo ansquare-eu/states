@@ -1,6 +1,7 @@
 package eu.ansquare.states.item;
 
 import eu.ansquare.states.block.StateBlockEntity;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -15,10 +16,12 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 public class NotepadItem extends Item {
 	public NotepadItem(Settings settings) {
@@ -35,5 +38,11 @@ public class NotepadItem extends Item {
 		nbt.put("chunks", list);
 		return TypedActionResult.success(stack);
 	}
-
+	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+		NbtCompound nbt = stack.getOrCreateNbt();
+		NbtList chunks = nbt.getList("chunks",11);
+		tooltip.add(Text.translatable("item.states.notepad.chunks", chunks.size()));
+		NbtList list = nbt.getList("players",11);
+		tooltip.add(Text.translatable("item.states.notepad.players", list.size()));
+	}
 }

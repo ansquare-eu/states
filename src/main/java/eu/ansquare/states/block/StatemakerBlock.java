@@ -45,7 +45,6 @@ public class StatemakerBlock extends BlockWithEntity {
 			NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
 
 			if (screenHandlerFactory != null) {
-				//With this call the server will request the client to open the appropriate Screenhandler
 				player.openHandledScreen(screenHandlerFactory);
 			}
 		}
