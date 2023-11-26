@@ -3,6 +3,7 @@ package eu.ansquare.states;
 import eu.ansquare.states.api.StatePermission;
 import eu.ansquare.states.block.StateBlockEntity;
 import eu.ansquare.states.block.StatesBlocks;
+import eu.ansquare.states.item.StatesItems;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -33,7 +34,10 @@ public class StatesEvents {
 		UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
 			if(!world.isClient()){
 				if(!StatePermission.permissionAt(world.getChunk(hitResult.getBlockPos().offset(hitResult.getSide())), player).maybuild){
-					if(player.getStackInHand(hand).getItem() instanceof BlockItem && !player.isSneaking()){
+					if(player.getStackInHand(hand).isOf(StatesItems.STATELEPORTER)){
+						return ActionResult.PASS;
+					}
+					if(player.getStackInHand(hand).getItem() instanceof BlockItem || player.isSneaking()){
 						player.sendMessage(Text.translatable("state.deny.build"), true);
 					}else {
 						player.sendMessage(Text.translatable("state.deny.interact"), true);

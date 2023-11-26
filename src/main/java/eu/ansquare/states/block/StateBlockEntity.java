@@ -15,10 +15,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtHelper;
-import net.minecraft.nbt.NbtIntArray;
-import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.*;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
@@ -108,6 +105,11 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 			});
 		}
 	}
+	public boolean canTp(UUID uuid){
+		NbtElement element = NbtHelper.fromUuid(uuid);
+
+		return allows.contains(element) || tps.contains(element);
+	}
 	public void addPlayers(NbtList list, int i){
 		if (i == 1){
 			list.forEach(nbtElement -> {
@@ -115,6 +117,7 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 				if(!allows.contains(nbtElement) && !denys.contains(nbtElement)){
 					StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(getWorld().getServer().getPlayerManager().getPlayer(uuid1)).ifPresent(citizenComponent -> citizenComponent.addAllow(uuid));
 					allows.add(allows.size(), nbtElement);
+
 				}
 			});
 		} else if (i == 2){
@@ -123,6 +126,14 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 				if(!allows.contains(nbtElement) && !denys.contains(nbtElement)){
 					StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(getWorld().getServer().getPlayerManager().getPlayer(uuid1)).ifPresent(citizenComponent -> citizenComponent.addDeny(uuid));
 					denys.add(denys.size(), nbtElement);
+				}
+			});
+		} else if(i == 3){
+			list.forEach(nbtElement -> {
+				UUID uuid1 = NbtHelper.toUuid(nbtElement);
+				if(!allows.contains(nbtElement) && !tps.contains(nbtElement)){
+					StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(getWorld().getServer().getPlayerManager().getPlayer(uuid1)).ifPresent(citizenComponent -> citizenComponent.addTp(uuid));
+					tps.add(tps.size(), nbtElement);
 				}
 			});
 		}
@@ -134,6 +145,8 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 		allows.clear();
 		denys.forEach(nbtElement -> StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(getWorld().getServer().getPlayerManager().getPlayer(NbtHelper.toUuid(nbtElement))).ifPresent(citizenComponent -> citizenComponent.removeDeny(uuid)));
 		denys.clear();
+		tps.forEach(nbtElement -> StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(getWorld().getServer().getPlayerManager().getPlayer(NbtHelper.toUuid(nbtElement))).ifPresent(citizenComponent -> citizenComponent.removeTp(uuid)));
+		tps.clear();
 	}
 	public void loadFromStack(int stackint){
 		ItemStack stack = inventory.get(stackint);
@@ -174,6 +187,12 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 				StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(uuid1).ifPresent(citizenComponent -> citizenComponent.removeDeny(uuid));
 			});
 			denys.clear();
+		}else if (stackint == 3) {
+			tps.forEach(nbtElement -> {
+				UUID uuid1 = NbtHelper.toUuid(nbtElement);
+				StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(uuid1).ifPresent(citizenComponent -> citizenComponent.removeTp(uuid));
+			});
+			tps.clear();
 		}
 	}
 

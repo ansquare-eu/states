@@ -8,6 +8,8 @@ import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtHelper;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -17,6 +19,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.system.linux.Stat;
 
 public class StatemakerBlock extends BlockWithEntity {
 	public StatemakerBlock(Settings settings) {
@@ -42,6 +45,23 @@ public class StatemakerBlock extends BlockWithEntity {
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
 		if (!world.isClient){
+
+			if(player.getStackInHand(hand).isOf(StatesItems.STATELEPORTER)){
+
+				if(world.getBlockEntity(pos) instanceof StateBlockEntity stateBlock){
+
+					if(stateBlock.canTp(player.getUuid())){
+
+						ItemStack stack = player.getStackInHand(hand);
+						NbtCompound nbt = stack.getOrCreateNbt();
+						nbt.put("pos", NbtHelper.fromBlockPos(player.getBlockPos()));
+						nbt.putString("world", world.getRegistryKey().getValue().toString());
+						States.LOGGER.info(world.getRegistryKey().getValue().toString());
+						return ActionResult.SUCCESS;
+					}
+				}
+				return ActionResult.FAIL;
+			}
 			NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
 
 			if (screenHandlerFactory != null) {

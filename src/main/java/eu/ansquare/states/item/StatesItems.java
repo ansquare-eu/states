@@ -32,5 +32,5 @@ public class StatesItems {
 	}
 
 	public static final Item NOTEPAD = createItem("notepad", new NotepadItem(new QuiltItemSettings().maxCount(1)), ItemGroups.TOOLS_AND_UTILITIES);
-
+	public static final Item STATELEPORTER = createItem("stateleporter", new StateleporterItem(new QuiltItemSettings().maxCount(1)), ItemGroups.TOOLS_AND_UTILITIES);
 }

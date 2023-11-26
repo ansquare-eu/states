@@ -44,4 +44,20 @@ public class StatePermission {
 		}
 		return new StatePermission("Components undiscovered", true);
 	}
+	public static boolean mayTp(Chunk chunk, PlayerEntity player){
+		if(StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(player).isPresent() && StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.maybeGet(chunk).isPresent()) {
+			ClaimedChunkComponent chunkComponent = StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.get(chunk);
+			CitizenComponent citizenComponent = StatesEntityComponents.CITIZEN_COMPONENT.get(player);
+			if(!chunkComponent.claimed){
+				return false;
+			} else if(citizenComponent.allow.contains(chunkComponent.stateId)){
+				return true;
+			} else if(citizenComponent.tp.contains(chunkComponent.stateId)){
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false;
+	}
 }

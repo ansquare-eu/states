@@ -11,11 +11,14 @@ import java.util.*;
 public class CitizenComponent implements Component {
 	public Set<UUID> allow = new HashSet<>();
 	public Set<UUID> deny = new HashSet<>();
+	public Set<UUID> tp = new HashSet<>();
+
 
 	@Override
 	public void readFromNbt(NbtCompound tag) {
 		tag.getList("allow", 11).forEach(nbtElement -> allow.add(NbtHelper.toUuid(nbtElement)));
 		tag.getList("deny", 11).forEach(nbtElement -> allow.add(NbtHelper.toUuid(nbtElement)));
+		tag.getList("tp", 11).forEach(nbtElement -> tp.add(NbtHelper.toUuid(nbtElement)));
 
 	}
 
@@ -27,6 +30,9 @@ public class CitizenComponent implements Component {
 		NbtList denylist = new NbtList();
 		deny.forEach(uuid -> denylist.add(NbtHelper.fromUuid(uuid)));
 		tag.put("deny", denylist);
+		NbtList tplist = new NbtList();
+		tp.forEach(uuid -> tplist.add(NbtHelper.fromUuid(uuid)));
+		tag.put("tp", denylist);
 	}
 	public void addAllow(UUID state){
 		allow.add(state);
@@ -38,6 +44,12 @@ public class CitizenComponent implements Component {
 		deny.add(state);
 	}
 	public void removeDeny(UUID state){
+		deny.remove(state);
+	}
+	public void addTp(UUID state){
+		deny.add(state);
+	}
+	public void removeTp(UUID state){
 		deny.remove(state);
 	}
 

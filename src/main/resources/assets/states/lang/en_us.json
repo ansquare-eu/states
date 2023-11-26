@@ -27,8 +27,8 @@
   "state.deny.interact": "You cannot use blocks here",
   "state.deny.attack" : "You cannot attack here",
   "state.deny.state" : "You cannot place a state inside a state",
-
+  "item.states.stateleporter": "Stateleporter",
   "item.states.notepad.chunks" : "%1$s chunks",
-  "item.states.notepad.players" : "%1$s players"
-
+  "item.states.notepad.players" : "%1$s players",
+  "item.states.stateleporter.tooltip" : "%1$s %2$s %3$s"
 }
