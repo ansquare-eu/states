@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.*;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.screen.NamedScreenHandlerFactory;
+import net.minecraft.screen.PropertyDelegate;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.stat.Stat;
@@ -47,6 +48,33 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 	public StateBlockEntity(BlockPos pos, BlockState state) {
 		super(StatesBlocks.STATE_BLOCK_ENTITY, pos, state);
 	}
+	private final PropertyDelegate propertyDelegate = new PropertyDelegate() {
+		@Override
+		public int get(int index) {
+			switch (index){
+				case 0:
+					return list.size();
+				case 1:
+					return allows.size();
+				case 2:
+					return denys.size();
+				case 3:
+					return tps.size();
+			}
+			return 0;
+		}
+
+		@Override
+		public void set(int index, int value) {
+		}
+
+		//this is supposed to return the amount of integers you have in your delegate, in our example only one
+		@Override
+		public int size() {
+			return 4;
+		}
+	};
+
 	public void init(UUID owner, ChunkPos pos){
 		StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.maybeGet(world.getChunk(pos.x, pos.z)).ifPresent(claimedChunkComponent -> {
 			if(claimedChunkComponent.claim(this).print(pos).valid){
@@ -204,12 +232,12 @@ public class StateBlockEntity extends BlockEntity implements ExtendedScreenHandl
 	@Nullable
 	@Override
 	public ScreenHandler createMenu(int i, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-		return new StatemakerScreenHandler(i, playerInventory, owner, this, this.getPos(), new int[]{list.size(), allows.size(), denys.size(), tps.size()});
+		return new StatemakerScreenHandler(i, playerInventory, owner, this, this.getPos(), propertyDelegate);
 	}
 
 	@Override
 	public void writeScreenOpeningData(ServerPlayerEntity player, PacketByteBuf buf) {
-		buf.writeUuid(owner).writeBlockPos(this.getPos()).writeIntArray(new int[]{list.size(), allows.size(), denys.size(), tps.size()});
+		buf.writeUuid(owner).writeBlockPos(this.getPos());
 	}
 	@Override
 	public int size() {
