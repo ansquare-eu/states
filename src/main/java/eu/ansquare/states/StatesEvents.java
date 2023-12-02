@@ -31,6 +31,7 @@ public class StatesEvents {
 			}
 			return ActionResult.PASS;
 		});
+
 		UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
 			if(!world.isClient()){
 				if(!StatePermission.permissionAt(world.getChunk(hitResult.getBlockPos().offset(hitResult.getSide())), player).maybuild){

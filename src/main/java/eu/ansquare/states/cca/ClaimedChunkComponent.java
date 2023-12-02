@@ -1,6 +1,7 @@
 package eu.ansquare.states.cca;
 
 import dev.onyxstudios.cca.api.v3.component.Component;
+import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import eu.ansquare.states.block.StateBlockEntity;
 import eu.ansquare.states.util.ClaimResult;
 import net.minecraft.nbt.NbtCompound;
@@ -11,7 +12,7 @@ import net.minecraft.world.chunk.Chunk;
 
 import java.util.UUID;
 
-public class ClaimedChunkComponent implements Component {
+public class ClaimedChunkComponent implements AutoSyncedComponent {
 
 	public boolean claimed = false;
 	public BlockPos ownerBlock;

@@ -1,6 +1,7 @@
 package eu.ansquare.states.cca;
 
 import dev.onyxstudios.cca.api.v3.component.Component;
+import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
@@ -8,7 +9,7 @@ import net.minecraft.nbt.NbtList;
 
 import java.util.*;
 
-public class CitizenComponent implements Component {
+public class CitizenComponent implements AutoSyncedComponent {
 	public Set<UUID> allow = new HashSet<>();
 	public Set<UUID> deny = new HashSet<>();
 	public Set<UUID> tp = new HashSet<>();

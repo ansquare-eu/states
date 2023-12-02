@@ -28,6 +28,9 @@ public class StatePermission {
 		}
 		return false;
 	}
+	public static StatePermission permissionAt(BlockPos pos, World world, PlayerEntity player){
+		return permissionAt(world.getChunk(pos), player);
+	}
 	public static StatePermission permissionAt(Chunk chunk, PlayerEntity player){
 		if(StatesEntityComponents.CITIZEN_COMPONENT.maybeGet(player).isPresent() && StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.maybeGet(chunk).isPresent()){
 			ClaimedChunkComponent chunkComponent = StatesChunkComponents.CLAIMED_CHUNK_COMPONENT.get(chunk);
