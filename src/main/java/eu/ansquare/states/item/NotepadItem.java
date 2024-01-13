@@ -12,6 +12,7 @@ import net.minecraft.nbt.*;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.math.ChunkPos;
@@ -41,8 +42,8 @@ public class NotepadItem extends Item {
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		NbtCompound nbt = stack.getOrCreateNbt();
 		NbtList chunks = nbt.getList("chunks",11);
-		tooltip.add(Text.translatable("item.states.notepad.chunks", chunks.size()));
+		tooltip.add(Text.translatable("item.states.notepad.chunks", chunks.size()).formatted(Formatting.GRAY));
 		NbtList list = nbt.getList("players",11);
-		tooltip.add(Text.translatable("item.states.notepad.players", list.size()));
+		tooltip.add(Text.translatable("item.states.notepad.players", list.size()).formatted(Formatting.GRAY));
 	}
 }

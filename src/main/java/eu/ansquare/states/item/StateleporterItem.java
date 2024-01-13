@@ -17,10 +17,7 @@ import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.GameRules;
@@ -71,7 +68,11 @@ public class StateleporterItem extends Item {
 	}
 	public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
 		NbtCompound nbt = stack.getOrCreateNbt();
+		if(nbt.contains("pos")){
+
+
 		BlockPos pos = NbtHelper.toBlockPos(nbt.getCompound("pos"));
-		tooltip.add(Text.translatable("item.states.stateleporter.tooltip", pos.getX(), pos.getY(), pos.getZ()));
+		tooltip.add(Text.translatable("item.states.stateleporter.tooltip", pos.getX(), pos.getY(), pos.getZ()).formatted(Formatting.GRAY));
+		}
 	}
 }
